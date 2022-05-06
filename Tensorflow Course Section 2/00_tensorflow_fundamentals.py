@@ -132,6 +132,10 @@ not_shuffled
 """**EXERCISE**
 
 ##### ✍︎ **Exercise**: Read through TensorFlow documentation on random seed generation: https://www.tensorflow.org/api_docs/python/tf/random/set_seed and practice writing 5 random tensors and shuffle them.
+
+##### It looks like if we want our shuffled tensors to be in the same order, we've got to use the global level random seed as well as the operation level random seed:
+
+> Rule 4: If both the global and the operation seeds are set; both seeds are used in conjunction to determine the random sequence.
 """
 
 # Shuffling the first tensor
@@ -207,3 +211,94 @@ tf.random.shuffle(tens5)
 
 tf.random.set_seed(9090)
 tf.random.shuffle(tens5, seed=93)
+
+tf.random.set_seed(42) # Global level random seed
+tf.random.shuffle(not_shuffled, seed=42) # Operational level random seed
+
+"""### Other ways to make tensors"""
+
+# Create a tensor of all ones
+tf.ones([10, 7])
+
+# Create a tensor of all zeroes
+tf.zeros(shape=(3,4))
+
+"""### Turn NumPy arrays into tensors
+
+##### The main difference between NumPy arrays and TensorFlow tensors is that tensors can be run on a GPU (much faster for numerical computing)
+"""
+
+# You can also turn NumPy arrays into tensors
+import numpy as np
+numpy_A = np.arange(1, 25, dtype=np.int32) # create a NumPy array between 1 and 25
+numpy_A
+
+# X = tf.constant(some_matrix) # capital for matrix or tensor
+# y = tf.constant(vector) # non capital for vector
+
+A = tf.constant(numpy_A)
+A
+
+A = tf.constant(numpy_A, shape=(2, 3, 4))
+B = tf.constant(numpy_A)
+A, B
+
+2 * 3 * 4
+
+A = tf.constant(numpy_A, shape=(2, 3, 5))
+B = tf.constant(numpy_A)
+A, B
+
+2 * 3 * 5
+
+A = tf.constant(numpy_A, shape=(2, 2, 3, 2))
+B = tf.constant(numpy_A)
+A, B
+
+A = tf.constant(numpy_A, shape=(3, 8))
+B = tf.constant(numpy_A)
+A, B
+
+A.ndim
+
+# Self-attempt
+selfap = np.arange(1, 101, dtype=np.int32)
+selfap
+
+C = tf.constant(selfap)
+C
+
+C = tf.constant(selfap, shape=(50, 2))
+D = tf.constant(selfap)
+C, D
+
+E = tf.constant(selfap, shape=(2, 2, 5, 5))
+E, D
+
+"""### Getting information from tensors
+
+##### When dealing with tensors you probably want to be aware of the following attributes:
+* Shape
+* Rank
+* Axis or Dimension
+* Size
+"""
+
+# Create a rank 4 tensor (4 dimensions)
+rank_4_tensor = tf.zeros([2, 3, 4, 5])
+rank_4_tensor
+
+rank_4_tensor[0]
+
+rank_4_tensor.shape, rank_4_tensor.ndim, tf.size(rank_4_tensor)
+
+2 * 3 * 4 * 5
+
+# Get various attributes of our tensor
+print("Datatype of every element:", rank_4_tensor.dtype)
+print("Number of dimensions (rank):", rank_4_tensor.ndim)
+print("Shape of tensor:", rank_4_tensor.shape)
+print("Elements along the 0 axis", rank_4_tensor.shape[0])
+print("Elements along the last axis", rank_4_tensor.shape[-1])
+print("Total number of elements in our tensor", tf.size(rank_4_tensor).numpy())
+print("Total number of elements in our tensor", tf.size(rank_4_tensor))
