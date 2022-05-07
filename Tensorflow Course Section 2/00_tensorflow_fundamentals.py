@@ -302,3 +302,49 @@ print("Elements along the 0 axis", rank_4_tensor.shape[0])
 print("Elements along the last axis", rank_4_tensor.shape[-1])
 print("Total number of elements in our tensor", tf.size(rank_4_tensor).numpy())
 print("Total number of elements in our tensor", tf.size(rank_4_tensor))
+
+"""### Indexing Tensors
+
+##### Tensors can be indexed just like Python lists
+"""
+
+some_list = [1, 2, 3, 4]
+some_list[:2]
+
+# Get the first two elements of each dimension
+rank_4_tensor[:2, :2, :2, :2]
+
+# Experimenting
+rank_4_tensor[:2, :2]
+
+some_list[:1]
+
+rank_4_tensor.shape
+
+# Get the first element from each dimension from each index except for the final one
+rank_4_tensor[:1, :1, :1]
+
+rank_4_tensor[:1, :1, :, :1]
+
+# Create a rank 2 tensor(2 dimensions)
+rank_2_tensor = tf.constant([[10, 7],
+                             [3, 4]])
+rank_2_tensor.shape, rank_2_tensor.ndim
+
+rank_2_tensor
+
+some_list, some_list[-1]
+
+# Get the last item of each of row of our rank 2 tensor
+rank_2_tensor[:, -1]
+
+# Add in extra dimension to our rank 2 tensor
+rank_3_tensor = rank_2_tensor[..., tf.newaxis]
+rank_3_tensor
+
+# Alternative to tf.newaxis
+tf.expand_dims(rank_2_tensor, axis=-1) # "-1" means expand the final axis
+
+tf.expand_dims(rank_2_tensor, axis=0) # expand the 0-axis
+
+rank_2_tensor
